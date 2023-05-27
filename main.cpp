@@ -34,7 +34,7 @@ int scp_send_port( uint8_t* buf , uint16_t len )
     return 0;
 }
 
-int printf_pack( scp_pack_t* pack )
+int printf_pack( scp_trans_pack_t* pack )
 {
     printf("pack printf.\n");
     printf( "control word: 0x%04X\n" , pack->control_word );

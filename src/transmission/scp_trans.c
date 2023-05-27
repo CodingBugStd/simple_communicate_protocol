@@ -15,7 +15,7 @@
 
 static void scp_trans_decoder_error_handler( scp_trans_decoder_t* decoder , uint8_t cu_byte );
 
-scp_trans_decoder_t scp_trans_decoder_create( scp_pack_t* pack , scp_trans_decoder_cb cb )
+scp_trans_decoder_t scp_trans_decoder_create( scp_trans_pack_t* pack , scp_trans_decoder_cb cb )
 {
     scp_trans_decoder_t decoder;
     decoder.cb = cb;
@@ -24,9 +24,9 @@ scp_trans_decoder_t scp_trans_decoder_create( scp_pack_t* pack , scp_trans_decod
     return decoder;
 }
 
-scp_pack_t scp_trans_pack_create( uint8_t* buf , uint16_t buf_len )
+scp_trans_pack_t scp_trans_pack_create( uint8_t* buf , uint16_t buf_len )
 {
-    scp_pack_t pack;
+    scp_trans_pack_t pack;
     pack.cmd_word = 0;
     pack.control_word = 0;
     pack.payload_len = 0;
@@ -35,7 +35,7 @@ scp_pack_t scp_trans_pack_create( uint8_t* buf , uint16_t buf_len )
     return pack;
 }
 
-int scp_trans_send( scp_pack_t* pack , scp_trans_port port)
+int scp_trans_send( scp_trans_pack_t* pack , scp_trans_port port)
 {
     if( pack->payload_len + PACK_FIXED_LEN > pack->payload.buf_len )
         return -1;
@@ -116,7 +116,7 @@ void scp_trans_decoder_error_handler( scp_trans_decoder_t* decoder , uint8_t cu_
 
 void scp_trans_decoder_input_byte( scp_trans_decoder_t* decoder , uint8_t byte )
 {
-    scp_pack_t* pack = decoder->pack;
+    scp_trans_pack_t* pack = decoder->pack;
 
     switch( decoder->decode_state )
     {
